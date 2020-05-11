@@ -12,6 +12,8 @@
         android:layout_height="wrap_content"
         android:text="@string/hello_blank_fragment"
         android:textSize="18sp"
+        android:layout_centerHorizontal="true"
+        android:textColor="#212121"
         android:padding="10dp"/>
 
     <androidx.recyclerview.widget.RecyclerView
@@ -21,5 +23,17 @@
         android:layout_below="@+id/txtview"
         android:padding="10dp"
         android:layout_margin="5dp"/>
+
+    <Button
+        android:id="@+id/btnConnectivity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginHorizontal="10dp"
+        android:layout_margin="10dp"
+        android:background="#1a237e"
+        android:text="Connectivity"
+        android:textColor="#ffffff"
+        android:textSize="20sp" />
 
 </RelativeLayout>
