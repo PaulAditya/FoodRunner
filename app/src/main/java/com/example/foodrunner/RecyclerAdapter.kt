@@ -7,11 +7,15 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class RecyclerAdapter(val context : Context, val itemList : ArrayList<String>): RecyclerView.Adapter<RecyclerAdapter.ViewHolder>(){
+class RecyclerAdapter(val context : Context, val itemList : ArrayList<Book>): RecyclerView.Adapter<RecyclerAdapter.ViewHolder>(){
 
     class ViewHolder(view: View): RecyclerView.ViewHolder(view){
 
-        val txtview: TextView = view.findViewById(R.id.txtRow)
+        val txtBookName: TextView = view.findViewById(R.id.txtBookName)
+        val txtBookAuthor: TextView = view.findViewById(R.id.txtBookAuthor)
+        val txtBookPrice: TextView = view.findViewById(R.id.txtBookPrice)
+        val txtBookRating: TextView = view.findViewById(R.id.txtBookRating)
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -24,7 +28,11 @@ class RecyclerAdapter(val context : Context, val itemList : ArrayList<String>): 
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val text = itemList[position]
-        holder.txtview.text = text
+        val book = itemList[position]
+        holder.txtBookName.text = book.bookName
+        holder.txtBookAuthor.text = book.bookAuthor
+        holder.txtBookPrice.text = book.bookPrice
+        holder.txtBookRating.text = book.bookRating
+
     }
 }
