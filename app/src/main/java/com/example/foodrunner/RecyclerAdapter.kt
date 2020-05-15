@@ -4,8 +4,10 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
 
 class RecyclerAdapter(val context : Context, val itemList : ArrayList<Book>): RecyclerView.Adapter<RecyclerAdapter.ViewHolder>(){
 
@@ -15,6 +17,7 @@ class RecyclerAdapter(val context : Context, val itemList : ArrayList<Book>): Re
         val txtBookAuthor: TextView = view.findViewById(R.id.txtBookAuthor)
         val txtBookPrice: TextView = view.findViewById(R.id.txtBookPrice)
         val txtBookRating: TextView = view.findViewById(R.id.txtBookRating)
+        val imgBookImage: ImageView = view.findViewById(R.id.imgBookImage)
 
     }
 
@@ -33,6 +36,6 @@ class RecyclerAdapter(val context : Context, val itemList : ArrayList<Book>): Re
         holder.txtBookAuthor.text = book.bookAuthor
         holder.txtBookPrice.text = book.bookPrice
         holder.txtBookRating.text = book.bookRating
-
+        Picasso.get().load(book.bookImage).into(holder.imgBookImage)
     }
 }

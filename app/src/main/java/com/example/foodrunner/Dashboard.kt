@@ -1,17 +1,29 @@
 package com.example.foodrunner
 
+import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
+import android.content.Intent
+import android.os.Build.VERSION_CODES.O
 import android.os.Bundle
+import android.provider.Settings
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.android.volley.Request
+import com.android.volley.Response
+import com.android.volley.toolbox.JsonObjectRequest
+import com.android.volley.toolbox.Volley
 import com.example.foodrunner.util.ConnectionManager
+
 
 class Dashboard : Fragment() {
 
@@ -19,21 +31,9 @@ class Dashboard : Fragment() {
     lateinit var recyclerDashboard: RecyclerView
     lateinit var layoutManager: RecyclerView.LayoutManager
     lateinit var recyclerAdapter: RecyclerAdapter
-    lateinit var btnConnectivity: Button
 
-    val bookInfoList = arrayListOf<Book>(
-        Book("P.S. I love You", "Cecelia Ahern", "Rs. 299", "4.5"),
-        Book("The Great Gatsby", "F. Scott Fitzgerald", "Rs. 399", "4.1"),
-        Book("Anna Karenina", "Leo Tolstoy", "Rs. 199", "4.3"),
-        Book("Madame Bovary", "Gustave Flaubert", "Rs. 500", "4.0"),
-        Book("War and Peace", "Leo Tolstoy", "Rs. 249", "4.8"),
-        Book("Lolita", "Vladimir Nabokov", "Rs. 349", "3.9"),
-        Book("Middlemarch", "George Eliot", "Rs. 599", "4.2"),
-        Book("The Adventures of Huckleberry Finn", "Mark Twain", "Rs. 699", "4.5"),
-        Book("Moby-Dick", "Herman Melville", "Rs. 499", "4.5"),
-        Book("The Lord of the Rings", "J.R.R Tolkien", "Rs. 749", "5.0")
-    )
 
+    val bookList = arrayListOf<Book>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,49 +41,72 @@ class Dashboard : Fragment() {
     ): View? {
 
         val view = inflater.inflate(R.layout.fragment_dashboard, container, false)
-
         recyclerDashboard = view.findViewById(R.id.recyclerDashboard)
         layoutManager = LinearLayoutManager(activity)
-        recyclerAdapter = RecyclerAdapter(activity as Context, bookInfoList)
-        recyclerDashboard.adapter = recyclerAdapter
-        recyclerDashboard.layoutManager = layoutManager
-        recyclerDashboard.addItemDecoration(
-            DividerItemDecoration(
-                recyclerDashboard.context,
-                (layoutManager as LinearLayoutManager).orientation
-            )
-        )
 
-        btnConnectivity = view.findViewById(R.id.btnConnectivity)
-        btnConnectivity.setOnClickListener {
-            if (ConnectionManager().checkConnectivity(activity as Context)) {
-                val dialog = AlertDialog.Builder(activity as Context)
-                dialog.setTitle("Success")
-                dialog.setMessage("Internet Connected")
-                dialog.setPositiveButton("OK") { text, listener ->
 
+
+        val queue = Volley.newRequestQueue(activity as Context)
+
+        val url = "http://13.235.250.119/v1/book/fetch_books/"
+
+        if (ConnectionManager().checkConnectivity(activity as Context)){
+            val jsonReq = object : JsonObjectRequest(Request.Method.GET, url, null, Response.Listener {
+
+                val succes = it.getBoolean("success")
+
+                if (succes) {
+                    val data = it.getJSONArray("data")
+                    println("Response $data")
+
+                    for (i in 0 until data.length()) {
+                        val book = data.getJSONObject(i)
+                        val bookObject = Book(
+                            book.getString("book_id"),
+                            book.getString("name"),
+                            book.getString("author"),
+                            book.getString("rating"),
+                            book.getString("price"),
+                            book.getString("image")
+                        )
+                        bookList.add(bookObject)
+                        recyclerAdapter = RecyclerAdapter(activity as Context, bookList)
+                        recyclerDashboard.adapter = recyclerAdapter
+                        recyclerDashboard.layoutManager = layoutManager
+
+                    }
+
+                } else {
+                    Toast.makeText(activity as Context, "Some error occured", Toast.LENGTH_SHORT).show()
                 }
-                dialog.setNegativeButton("Cancel") { text, listener ->
+            }, Response.ErrorListener {
 
+            }) {
+                override fun getHeaders(): MutableMap<String, String> {
+                    val headers = HashMap<String, String>()
+                    headers["Content-type"] = "application/json"
+                    headers["token"] = "38ac8d48e87ad3"
+                    return headers
                 }
-                dialog.create()
-                dialog.show()
-            } else {
-                val dialog = AlertDialog.Builder(activity as Context)
-                dialog.setTitle("Failure")
-                dialog.setMessage("Internet Not Connected")
-                dialog.setPositiveButton("OK") { text, listener ->
-
-                }
-                dialog.setNegativeButton("Cancel") { text, listener ->
-
-                }
-                dialog.create()
-                dialog.show()
-
             }
-        }
 
+            queue.add(jsonReq)
+        }
+        else{
+            val dialog = AlertDialog.Builder(activity as Context)
+            dialog.setTitle("Failure")
+            dialog.setMessage("Internet Not Connected")
+            dialog.setPositiveButton("Settings") { text, listener ->
+                val settingIntent = Intent(Settings.ACTION_WIRELESS_SETTINGS)
+                startActivity(settingIntent)
+                activity?.finish()
+            }
+            dialog.setNegativeButton("Exit") { text, listener ->
+                ActivityCompat.finishAffinity(activity as Activity)
+            }
+            dialog.create()
+            dialog.show()
+        }
 
         return view
     }
