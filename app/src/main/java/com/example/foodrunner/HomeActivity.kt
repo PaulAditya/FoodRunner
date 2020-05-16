@@ -121,7 +121,7 @@ class HomeActivity : AppCompatActivity() {
         when(frag){
             !is Dashboard-> openDashBoard()
 
-            else-> super.onBackPressed()
+            else-> finishAffinity()
         }
     }
 }
