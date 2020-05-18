@@ -4,17 +4,24 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
+import android.os.AsyncTask
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
+import android.view.MenuItem
 import android.view.View
 import android.widget.*
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.room.Database
+import androidx.room.Room
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
+import com.example.foodrunner.database.BookDatabase
+import com.example.foodrunner.database.BookEntity
 import com.example.foodrunner.util.ConnectionManager
 import com.squareup.picasso.Picasso
 import org.json.JSONObject
@@ -31,11 +38,13 @@ class BookDescription : AppCompatActivity() {
     lateinit var txtBookDescription : TextView
     lateinit var txtRating : TextView
     lateinit var imgBookImage: ImageView
+    lateinit var toolbar: Toolbar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_book_description)
 
+        toolbar = findViewById(R.id.toolbar)
         btnFav = findViewById(R.id.btnFav)
         imgBookImage = findViewById(R.id.imgBookImage)
         progressLayout = findViewById(R.id.progressLayout)
@@ -47,6 +56,8 @@ class BookDescription : AppCompatActivity() {
         txtRating = findViewById(R.id.txtRating)
         progressBar.visibility = View.VISIBLE
         progressLayout.visibility = View.VISIBLE
+
+        setUpToolbar()
 
         var bookId :  String? = "100"
 
@@ -83,7 +94,47 @@ class BookDescription : AppCompatActivity() {
                         txtBookDescription.text = bookData.getString("description")
                         Picasso.get().load(bookData.getString("image")).into(imgBookImage)
 
-                    }else{
+                        val bookEntity = BookEntity(
+                            bookId?.toInt() as Int,
+                            bookData.getString("name"),
+                            bookData.getString("author"),
+                            bookData.getString("price"),
+                            bookData.getString("rating"),
+                            bookData.getString("description"),
+                            bookData.getString("image")
+                        )
+
+                        val checkFav = Dbasync(applicationContext, bookEntity, 1).execute()
+                        val inFav = checkFav.get()
+
+                        if(inFav){
+                            btnFav.text = "Remove from Favourites"
+                            btnFav.setBackgroundColor(ContextCompat.getColor(applicationContext, R.color.removeFav))
+                        }
+
+
+
+                        btnFav.setOnClickListener {
+
+                            if(!(Dbasync(applicationContext, bookEntity,1).execute().get())){
+                                if(Dbasync(applicationContext, bookEntity, 2).execute().get()){
+                                    Toast.makeText(this@BookDescription, "Added to Favourites", Toast.LENGTH_SHORT).show()
+                                    btnFav.text = "Remove from Favourites"
+                                    btnFav.setBackgroundColor(ContextCompat.getColor(applicationContext, R.color.removeFav))
+                                }else{
+                                    Toast.makeText(this@BookDescription, "Try Agian", Toast.LENGTH_SHORT).show()
+                                }
+                            }else{
+                                if(Dbasync(applicationContext, bookEntity, 3).execute().get()){
+                                    Toast.makeText(this@BookDescription, "Removed from Favourites", Toast.LENGTH_SHORT).show()
+                                    btnFav.text = "Added to Favourites"
+                                    btnFav.setBackgroundColor(ContextCompat.getColor(applicationContext, R.color.addFav))
+                                }else{
+                                    Toast.makeText(this@BookDescription, "Try Agian", Toast.LENGTH_SHORT).show()
+                                }
+                            }
+                        }
+                     }else{
 
                     }
                 }catch (e : Exception){
@@ -116,6 +167,42 @@ class BookDescription : AppCompatActivity() {
             dialog.create()
             dialog.show()
         }
-
     }
+
+    class Dbasync(val context: Context,val bookEntity: BookEntity,val mode : Int) : AsyncTask<Void, Void, Boolean>() {
+
+        val db = Room.databaseBuilder(context, BookDatabase::class.java, "books-db").build()
+        override fun doInBackground(vararg params: Void?): Boolean {
+
+            when(mode){
+                1-> {
+                    val book = db.bookDao().getBookById(bookEntity.book_id.toString())
+                    db.close()
+                    return book != null
+                }
+                2-> {
+                    db.bookDao().insertBook(bookEntity)
+                    db.close()
+                    return true
+                }
+                3-> {
+                    db.bookDao().deleteBook(bookEntity)
+                    db.close()
+                    return true
+                }
+            }
+            return false
+        }
+    }
+
+    fun setUpToolbar(){
+        setSupportActionBar(toolbar)
+        supportActionBar?.title = "Toolbar"
+        supportActionBar?.setHomeButtonEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+
+
+
 }
