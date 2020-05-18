@@ -1,9 +1,10 @@
-package com.example.foodrunner
+package com.example.foodrunner.Activity
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import com.example.foodrunner.R
 
 class MainActivity : AppCompatActivity() {
 

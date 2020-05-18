@@ -1,15 +1,19 @@
-package com.example.foodrunner
+package com.example.foodrunner.Activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.FrameLayout
-import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import com.example.foodrunner.Fragment.Dashboard
+import com.example.foodrunner.Fragment.Favourites
+import com.example.foodrunner.Fragment.About
+import com.example.foodrunner.Fragment.Profile
+import com.example.foodrunner.R
 import com.google.android.material.navigation.NavigationView
 
 class HomeActivity : AppCompatActivity() {
@@ -49,7 +53,10 @@ class HomeActivity : AppCompatActivity() {
                 }
                 R.id.profile -> {
                     supportFragmentManager.beginTransaction()
-                        .replace(R.id.frame, Profile())
+                        .replace(
+                            R.id.frame,
+                            Profile()
+                        )
 
                         .commit()
 
@@ -57,7 +64,10 @@ class HomeActivity : AppCompatActivity() {
                 }
                 R.id.favourites -> {
                     supportFragmentManager.beginTransaction()
-                        .replace(R.id.frame, Favourites())
+                        .replace(
+                            R.id.frame,
+                            Favourites()
+                        )
 
                         .commit()
 
@@ -65,7 +75,10 @@ class HomeActivity : AppCompatActivity() {
                 }
                 R.id.about -> {
                     supportFragmentManager.beginTransaction()
-                        .replace(R.id.frame, About())
+                        .replace(
+                            R.id.frame,
+                            About()
+                        )
 
                         .commit()
 
@@ -108,7 +121,10 @@ class HomeActivity : AppCompatActivity() {
 
     fun openDashBoard() {
         supportFragmentManager.beginTransaction()
-            .replace(R.id.frame, Dashboard())
+            .replace(
+                R.id.frame,
+                Dashboard()
+            )
             .addToBackStack("Dashboard")
             .commit()
     }
@@ -119,7 +135,7 @@ class HomeActivity : AppCompatActivity() {
         navigation_view.checkedItem?.isChecked = false
 
         when(frag){
-            !is Dashboard-> openDashBoard()
+            !is Dashboard -> openDashBoard()
 
             else-> finishAffinity()
         }

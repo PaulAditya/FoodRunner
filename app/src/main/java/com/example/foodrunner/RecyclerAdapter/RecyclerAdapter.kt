@@ -1,4 +1,4 @@
-package com.example.foodrunner
+package com.example.foodrunner.RecyclerAdapter
 
 import android.content.Context
 import android.content.Intent
@@ -10,6 +10,9 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.example.foodrunner.Activity.BookDescription
+import com.example.foodrunner.Dataclass.Book
+import com.example.foodrunner.R
 import com.squareup.picasso.Picasso
 
 class RecyclerAdapter(val context : Context, val itemList : ArrayList<Book>): RecyclerView.Adapter<RecyclerAdapter.ViewHolder>(){

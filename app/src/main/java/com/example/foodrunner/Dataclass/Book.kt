@@ -1,4 +1,4 @@
-package com.example.foodrunner
+package com.example.foodrunner.Dataclass
 
 data class Book (
 

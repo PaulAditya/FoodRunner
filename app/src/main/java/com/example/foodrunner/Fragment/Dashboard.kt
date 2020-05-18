@@ -1,27 +1,26 @@
-package com.example.foodrunner
+package com.example.foodrunner.Fragment
 
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
-import android.os.Build.VERSION_CODES.O
 import android.os.Bundle
 import android.provider.Settings
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
+import com.example.foodrunner.Dataclass.Book
+import com.example.foodrunner.R
+import com.example.foodrunner.RecyclerAdapter.RecyclerAdapter
 import com.example.foodrunner.util.ConnectionManager
 
 
@@ -70,7 +69,11 @@ class Dashboard : Fragment() {
                             book.getString("image")
                         )
                         bookList.add(bookObject)
-                        recyclerAdapter = RecyclerAdapter(activity as Context, bookList)
+                        recyclerAdapter =
+                            RecyclerAdapter(
+                                activity as Context,
+                                bookList
+                            )
                         recyclerDashboard.adapter = recyclerAdapter
                         recyclerDashboard.layoutManager = layoutManager
 

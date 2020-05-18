@@ -1,6 +1,5 @@
-package com.example.foodrunner
+package com.example.foodrunner.Activity
 
-import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
@@ -8,18 +7,17 @@ import android.os.AsyncTask
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
-import android.view.MenuItem
 import android.view.View
 import android.widget.*
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.room.Database
 import androidx.room.Room
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
+import com.example.foodrunner.R
 import com.example.foodrunner.database.BookDatabase
 import com.example.foodrunner.database.BookEntity
 import com.example.foodrunner.util.ConnectionManager
@@ -104,31 +102,53 @@ class BookDescription : AppCompatActivity() {
                             bookData.getString("image")
                         )
 
-                        val checkFav = Dbasync(applicationContext, bookEntity, 1).execute()
+                        val checkFav = Dbasync(
+                            applicationContext,
+                            bookEntity,
+                            1
+                        ).execute()
                         val inFav = checkFav.get()
 
                         if(inFav){
                             btnFav.text = "Remove from Favourites"
-                            btnFav.setBackgroundColor(ContextCompat.getColor(applicationContext, R.color.removeFav))
+                            btnFav.setBackgroundColor(ContextCompat.getColor(applicationContext,
+                                R.color.removeFav
+                            ))
                         }
 
 
 
                         btnFav.setOnClickListener {
 
-                            if(!(Dbasync(applicationContext, bookEntity,1).execute().get())){
-                                if(Dbasync(applicationContext, bookEntity, 2).execute().get()){
+                            if(!(Dbasync(
+                                    applicationContext,
+                                    bookEntity,
+                                    1
+                                ).execute().get())){
+                                if(Dbasync(
+                                        applicationContext,
+                                        bookEntity,
+                                        2
+                                    ).execute().get()){
                                     Toast.makeText(this@BookDescription, "Added to Favourites", Toast.LENGTH_SHORT).show()
                                     btnFav.text = "Remove from Favourites"
-                                    btnFav.setBackgroundColor(ContextCompat.getColor(applicationContext, R.color.removeFav))
+                                    btnFav.setBackgroundColor(ContextCompat.getColor(applicationContext,
+                                        R.color.removeFav
+                                    ))
                                 }else{
                                     Toast.makeText(this@BookDescription, "Try Agian", Toast.LENGTH_SHORT).show()
                                 }
                             }else{
-                                if(Dbasync(applicationContext, bookEntity, 3).execute().get()){
+                                if(Dbasync(
+                                        applicationContext,
+                                        bookEntity,
+                                        3
+                                    ).execute().get()){
                                     Toast.makeText(this@BookDescription, "Removed from Favourites", Toast.LENGTH_SHORT).show()
                                     btnFav.text = "Added to Favourites"
-                                    btnFav.setBackgroundColor(ContextCompat.getColor(applicationContext, R.color.addFav))
+                                    btnFav.setBackgroundColor(ContextCompat.getColor(applicationContext,
+                                        R.color.addFav
+                                    ))
                                 }else{
                                     Toast.makeText(this@BookDescription, "Try Agian", Toast.LENGTH_SHORT).show()
                                 }
