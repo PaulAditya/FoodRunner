@@ -34,12 +34,12 @@
         android:textSize="20sp" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/etUsername"
+        android:id="@+id/etMobile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/txtHeading"
         android:layout_marginTop="30dp"
-        android:hint="Username">
+        android:hint="Mobile No.">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
@@ -52,7 +52,7 @@
         android:id="@+id/etPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/etUsername"
+        android:layout_below="@id/etMobile"
         android:layout_marginHorizontal="20dp"
         android:hint="Password">
 
