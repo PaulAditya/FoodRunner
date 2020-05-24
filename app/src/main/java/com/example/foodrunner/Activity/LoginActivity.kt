@@ -35,8 +35,7 @@ class LoginActivity : AppCompatActivity() {
         txtRegister = findViewById(R.id.txtRegister)
         btnLogin = findViewById(R.id.btnLogin)
 
-
-
+        //LOGIN
 
         btnLogin.setOnClickListener {
 
@@ -85,10 +84,19 @@ class LoginActivity : AppCompatActivity() {
             }
 
         }
+
+
+
+        //FORGOT PASSWORD
+
         txtForgot.setOnClickListener {
             val intent = Intent(this@LoginActivity, ForgotPassword::class.java)
             startActivity(intent)
         }
+
+
+        //REGISTER YOURSELF
+
         txtRegister.setOnClickListener {
             val intent = Intent(this@LoginActivity, Register::class.java)
             startActivity(intent)
