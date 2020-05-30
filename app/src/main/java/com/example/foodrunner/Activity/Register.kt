@@ -73,6 +73,8 @@ class Register : AppCompatActivity() {
                             return headers
                         }
                     }
+
+                    queue.add(registerPostReq)
                 }else{
                     Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show()
                 }
