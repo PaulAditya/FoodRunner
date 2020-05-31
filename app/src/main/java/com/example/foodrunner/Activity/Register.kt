@@ -61,7 +61,8 @@ class Register : AppCompatActivity() {
                             val intent = Intent(this@Register, HomeActivity::class.java)
                             startActivity(intent)
                         }else{
-                            Toast.makeText(this, "Try Again", Toast.LENGTH_SHORT).show()
+                            val msg = data.getString("errorMessage")
+                            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
                         }
                     }, Response.ErrorListener {
                         Toast.makeText(this, "Registration failed", Toast.LENGTH_SHORT).show()

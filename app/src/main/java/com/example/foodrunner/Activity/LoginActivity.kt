@@ -56,6 +56,9 @@ class LoginActivity : AppCompatActivity() {
                             if(data.getBoolean("success")){
                                 val intent = Intent(this@LoginActivity, HomeActivity::class.java)
                                 startActivity(intent)
+                            }else{
+                                val msg = data.getString("errorMessage")
+                                Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
                             }
 
                         },
