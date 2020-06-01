@@ -28,7 +28,7 @@
         not give any width to those layout-->
 
         <ImageView
-            android:id="@+id/imgBookImage"
+            android:id="@+id/imgImage"
             android:layout_width="0dp"
             android:layout_height="110dp"
             android:layout_weight="1.5"
@@ -41,7 +41,7 @@
             android:layout_weight="3.3">
 
             <TextView
-                android:id="@+id/txtBookName"
+                android:id="@+id/txtName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
@@ -50,19 +50,10 @@
                 android:textSize="18sp" />
 
             <TextView
-                android:id="@+id/txtBookAuthor"
+                android:id="@+id/txtCost"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/txtBookName"
-                android:padding="8dp"
-                android:text="Name of the Author"
-                android:textSize="15sp" />
-
-            <TextView
-                android:id="@+id/txtBookPrice"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/txtBookAuthor"
+                android:layout_below="@id/txtName"
                 android:layout_alignParentBottom="true"
                 android:padding="8dp"
                 android:text="Rs. 299"
@@ -77,7 +68,7 @@
         drawableLeft (or drawableRight and so on) attribute-->
 
         <TextView
-            android:id="@+id/txtBookRating"
+            android:id="@+id/txtRating"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1.2"

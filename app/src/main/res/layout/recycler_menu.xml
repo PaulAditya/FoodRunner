@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:orientation="horizontal"
+    android:weightSum="6"
+    android:id="@+id/llParent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="4">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtName"
+            android:text="Name Of Item"
+            android:textColor="#111111"
+            android:layout_marginLeft="20dp"
+            android:textSize="20sp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtCost"
+            android:text="Rs.100"
+            android:layout_below="@+id/txtName"
+            android:textColor="#111111"
+            android:layout_marginLeft="20dp"
+            android:padding="2dp"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:layout_gravity="center">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:id="@+id/btnadd"
+            android:layout_marginHorizontal="10dp"
+            android:text="Add"
+            android:textSize="10sp"
+            android:background="#1a237e"
+            android:textColor="#ffffff"/>
+    </RelativeLayout>
+
+</LinearLayout>

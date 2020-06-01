@@ -18,7 +18,7 @@ import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
-import com.example.foodrunner.Dataclass.Book
+import com.example.foodrunner.Dataclass.Restaurant
 import com.example.foodrunner.R
 import com.example.foodrunner.RecyclerAdapter.RecyclerAdapter
 import com.example.foodrunner.util.ConnectionManager
@@ -32,7 +32,7 @@ class Dashboard : Fragment() {
     lateinit var recyclerAdapter: RecyclerAdapter
 
 
-    val bookList = arrayListOf<Book>()
+    val restaurantList = arrayListOf<Restaurant>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,36 +43,32 @@ class Dashboard : Fragment() {
         recyclerDashboard = view.findViewById(R.id.recyclerDashboard)
         layoutManager = LinearLayoutManager(activity)
 
-
-
         val queue = Volley.newRequestQueue(activity as Context)
 
-        val url = "http://13.235.250.119/v1/book/fetch_books/"
+        val url = "http://13.235.250.119/v2/restaurants/fetch_result/"
 
         if (ConnectionManager().checkConnectivity(activity as Context)){
             val jsonReq = object : JsonObjectRequest(Request.Method.GET, url, null, Response.Listener {
+                val data = it.getJSONObject("data")
+                val success = data.getBoolean("success")
 
-                val succes = it.getBoolean("success")
+                if (success) {
+                    val resData = data.getJSONArray("data")
 
-                if (succes) {
-                    val data = it.getJSONArray("data")
-                    println("Response $data")
-
-                    for (i in 0 until data.length()) {
-                        val book = data.getJSONObject(i)
-                        val bookObject = Book(
-                            book.getString("book_id"),
-                            book.getString("name"),
-                            book.getString("author"),
-                            book.getString("rating"),
-                            book.getString("price"),
-                            book.getString("image")
+                    for (i in 0 until resData.length()) {
+                        val restaurant = resData.getJSONObject(i)
+                        val restaurantObject = Restaurant(
+                            restaurant.getString("id"),
+                            restaurant.getString("name"),
+                            restaurant.getString("rating"),
+                            restaurant.getString("cost_for_one"),
+                            restaurant.getString("image_url")
                         )
-                        bookList.add(bookObject)
+                        restaurantList.add(restaurantObject)
                         recyclerAdapter =
                             RecyclerAdapter(
                                 activity as Context,
-                                bookList
+                                restaurantList
                             )
                         recyclerDashboard.adapter = recyclerAdapter
                         recyclerDashboard.layoutManager = layoutManager

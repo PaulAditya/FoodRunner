@@ -10,21 +10,19 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
-import com.example.foodrunner.Dataclass.Book
 import com.example.foodrunner.R
-import com.example.foodrunner.RecyclerAdapter.FavBookRecycler
-import com.example.foodrunner.RecyclerAdapter.RecyclerAdapter
-import com.example.foodrunner.database.BookDatabase
-import com.example.foodrunner.database.BookEntity
+import com.example.foodrunner.RecyclerAdapter.FavRestaurantRecycler
+import com.example.foodrunner.database.RestaurantDatabase
+import com.example.foodrunner.database.RestaurantEntity
 
 
 class Favourites : Fragment() {
 
     lateinit var recyclerDashboard: RecyclerView
     lateinit var layoutManager: RecyclerView.LayoutManager
-    lateinit var recyclerAdapter: FavBookRecycler
+    lateinit var recyclerAdapter: FavRestaurantRecycler
 
-    var favBookList = listOf<BookEntity>()
+    var favRestaurantList = listOf<RestaurantEntity>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,13 +33,13 @@ class Favourites : Fragment() {
         recyclerDashboard = view.findViewById(R.id.recyclerDashboard)
         layoutManager = GridLayoutManager(activity as Context, 2 )
 
-        favBookList = RetrieveFavBook(activity as Context).execute().get()
+        favRestaurantList = RetrieveFavRestaurant(activity as Context).execute().get()
 
         if(activity != null){
             recyclerAdapter =
-                FavBookRecycler(
+                FavRestaurantRecycler(
                     activity as Context,
-                    favBookList
+                    favRestaurantList
                 )
             recyclerDashboard.adapter = recyclerAdapter
             recyclerDashboard.layoutManager = layoutManager
@@ -50,11 +48,11 @@ class Favourites : Fragment() {
         return view
     }
 
-    class RetrieveFavBook(val context: Context): AsyncTask<Void, Void, List<BookEntity>>() {
-        override fun doInBackground(vararg params: Void?): List<BookEntity> {
-            val db = Room.databaseBuilder(context, BookDatabase::class.java, "books-db").build()
+    class RetrieveFavRestaurant(val context: Context): AsyncTask<Void, Void, List<RestaurantEntity>>() {
+        override fun doInBackground(vararg params: Void?): List<RestaurantEntity> {
+            val db = Room.databaseBuilder(context, RestaurantDatabase::class.java, "restaurant-db").build()
 
-            return db.bookDao().getAllBook()
+            return db.restaurantDao().getAllRestaurant()
         }
     }
 

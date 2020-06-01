@@ -16,7 +16,7 @@
         android:weightSum="11">
 
         <ImageView
-            android:id="@+id/imgBookImage"
+            android:id="@+id/imgImage"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="5"
@@ -25,7 +25,7 @@
             android:src="@drawable/ic_launcher_background" />
 
         <TextView
-            android:id="@+id/txtBookName"
+            android:id="@+id/txtName"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_margin="2dp"
@@ -64,7 +64,7 @@
             android:background="#f5f5f5" />
 
         <TextView
-            android:id="@+id/txtBookPrice"
+            android:id="@+id/txtCost"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_margin="2dp"
@@ -84,7 +84,7 @@
             android:background="#f5f5f5" />
 
         <TextView
-            android:id="@+id/txtBookRating"
+            android:id="@+id/txtRating"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_gravity="center"

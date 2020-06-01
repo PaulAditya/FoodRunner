@@ -10,20 +10,19 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import com.example.foodrunner.Activity.BookDescription
-import com.example.foodrunner.Dataclass.Book
+import com.example.foodrunner.Activity.RestaurantAcitivty
+import com.example.foodrunner.Dataclass.Restaurant
 import com.example.foodrunner.R
 import com.squareup.picasso.Picasso
 
-class RecyclerAdapter(val context : Context, val itemList : ArrayList<Book>): RecyclerView.Adapter<RecyclerAdapter.ViewHolder>(){
+class RecyclerAdapter(val context : Context, val itemList : ArrayList<Restaurant>): RecyclerView.Adapter<RecyclerAdapter.ViewHolder>(){
 
     class ViewHolder(view: View): RecyclerView.ViewHolder(view){
 
-        val txtBookName: TextView = view.findViewById(R.id.txtBookName)
-        val txtBookAuthor: TextView = view.findViewById(R.id.txtBookAuthor)
-        val txtBookPrice: TextView = view.findViewById(R.id.txtBookPrice)
-        val txtBookRating: TextView = view.findViewById(R.id.txtBookRating)
-        val imgBookImage: ImageView = view.findViewById(R.id.imgBookImage)
+        val txtName: TextView = view.findViewById(R.id.txtName)
+        val txtPrice: TextView = view.findViewById(R.id.txtCost)
+        val txtRating: TextView = view.findViewById(R.id.txtRating)
+        val imgImage: ImageView = view.findViewById(R.id.imgImage)
         val llParent: LinearLayout = view.findViewById(R.id.llParent)
     }
 
@@ -37,17 +36,16 @@ class RecyclerAdapter(val context : Context, val itemList : ArrayList<Book>): Re
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val book = itemList[position]
-        holder.txtBookName.text = book.bookName
-        holder.txtBookAuthor.text = book.bookAuthor
-        holder.txtBookPrice.text = book.bookPrice
-        holder.txtBookRating.text = book.bookRating
-        Picasso.get().load(book.bookImage).into(holder.imgBookImage)
+        val restaurant = itemList[position]
+        holder.txtName.text = restaurant.name
+        holder.txtPrice.text = restaurant.price
+        holder.txtRating.text = restaurant.rating
+        Picasso.get().load(restaurant.image).into(holder.imgImage)
         holder.llParent.setOnClickListener {
-            Toast.makeText(context, "Clicked on ${holder.txtBookName.text}", Toast.LENGTH_SHORT ).show()
-            val bookIntent = Intent(context, BookDescription::class.java )
-            bookIntent.putExtra("book_id", book.bookId)
-            context.startActivity(bookIntent)
+            Toast.makeText(context, "Clicked on ${holder.txtName.text}", Toast.LENGTH_SHORT ).show()
+            val intent = Intent(context, RestaurantAcitivty::class.java )
+            intent.putExtra("restaurant_id", restaurant.id)
+            context.startActivity(intent)
 
         }
     }
