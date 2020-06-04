@@ -4,7 +4,8 @@
     android:orientation="horizontal"
     android:weightSum="6"
     android:id="@+id/llParent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_marginVertical="20dp">
 
     <RelativeLayout
         android:layout_width="0dp"
@@ -12,23 +13,27 @@
         android:layout_weight="4">
 
         <TextView
+            android:id="@+id/txtName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/txtName"
+            android:layout_marginLeft="20dp"
+            android:fontFamily="@font/delius_swash_caps"
             android:text="Name Of Item"
             android:textColor="#111111"
-            android:layout_marginLeft="20dp"
-            android:textSize="20sp"/>
+            android:textSize="15sp"
+            android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/txtCost"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/txtCost"
-            android:text="Rs.100"
             android:layout_below="@+id/txtName"
-            android:textColor="#111111"
             android:layout_marginLeft="20dp"
-            android:padding="2dp"/>
+            android:fontFamily="@font/autour_one"
+            android:padding="2dp"
+            android:text="Rs.100"
+            android:textColor="#111111"
+            android:textSize="12sp" />
 
     </RelativeLayout>
 

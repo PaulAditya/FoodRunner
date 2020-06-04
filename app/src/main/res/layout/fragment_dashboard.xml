@@ -6,14 +6,11 @@
     android:layout_height="match_parent"
     tools:context=".Fragment.Dashboard">
 
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerDashboard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="2dp"
         android:layout_margin="5dp"/>
-
-
 
 </RelativeLayout>

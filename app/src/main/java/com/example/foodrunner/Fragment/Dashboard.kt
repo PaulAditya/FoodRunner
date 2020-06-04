@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
+import android.os.AsyncTask
 import android.os.Bundle
 import android.provider.Settings
 import androidx.fragment.app.Fragment
@@ -14,6 +15,7 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.room.Room
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
@@ -21,6 +23,8 @@ import com.android.volley.toolbox.Volley
 import com.example.foodrunner.Dataclass.Restaurant
 import com.example.foodrunner.R
 import com.example.foodrunner.RecyclerAdapter.RecyclerAdapter
+import com.example.foodrunner.database.RestaurantDatabase
+import com.example.foodrunner.database.RestaurantEntity
 import com.example.foodrunner.util.ConnectionManager
 
 
@@ -30,7 +34,6 @@ class Dashboard : Fragment() {
     lateinit var recyclerDashboard: RecyclerView
     lateinit var layoutManager: RecyclerView.LayoutManager
     lateinit var recyclerAdapter: RecyclerAdapter
-
 
     val restaurantList = arrayListOf<Restaurant>()
 
@@ -109,5 +112,7 @@ class Dashboard : Fragment() {
 
         return view
     }
+
+
 
 }

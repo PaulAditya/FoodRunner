@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <array name="preloaded_fonts" translatable="false">
+        <item>@font/</item>
+        <item>@font/anton</item>
+        <item>@font/autour_one</item>
         <item>@font/bangers</item>
+        <item>@font/caesar_dressing</item>
+        <item>@font/delius_swash_caps</item>
+        <item>@font/galindo</item>
     </array>
 </resources>

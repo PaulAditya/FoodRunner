@@ -10,42 +10,48 @@
     app:cardCornerRadius="5dp">
 
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="140dp"
+        android:layout_height="fill_parent"
         android:background="#ffffff"
         android:id="@+id/llParent"
         android:orientation="horizontal"
         android:weightSum="6"
         android:layout_margin="5dp">
 
-        <!--The weight sum property is used to divide the layout into
-        different parts and then giving each layout a particular weight
-        gives it that amount of space on the screen-->
-
-
-        <!--Since each parent layout will have a specific weight, we need
-        not give any width to those layout-->
-
-        <ImageView
-            android:id="@+id/imgImage"
+        <androidx.cardview.widget.CardView
             android:layout_width="0dp"
-            android:layout_height="110dp"
-            android:layout_weight="1.5"
-            android:padding="5dp"
-            android:src="@mipmap/ic_launcher" />
+            android:layout_height="match_parent"
+            android:layout_weight="2.0"
+            app:cardCornerRadius="10dp">
+            <ImageView
+                android:id="@+id/imgImage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:scaleType="fitXY"
+                android:src="@mipmap/ic_launcher" />
+
+        </androidx.cardview.widget.CardView>
+
+
+
 
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="3.3">
+            android:layout_weight="2.5"
+            android:id="@+id/rlParent"
+            android:layout_marginLeft="10dp">
 
             <TextView
                 android:id="@+id/txtName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/galindo"
                 android:padding="8dp"
-                android:text="Name of the book"
+                android:text="Name of the Restaurant"
                 android:textColor="#000000"
                 android:textSize="18sp" />
 
@@ -59,28 +65,37 @@
                 android:text="Rs. 299"
                 android:textColor="#357a38"
                 android:textSize="15sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"/>
         </RelativeLayout>
 
 
-        <!--Many times we see that texts have an image along with them to
-        their right or left. This is added with the help of the
-        drawableLeft (or drawableRight and so on) attribute-->
-
-        <TextView
-            android:id="@+id/txtRating"
+        <RelativeLayout
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1.2"
-            android:drawableLeft="@drawable/ic_ratings"
-            android:drawablePadding="4dp"
-            android:padding="4dp"
-            android:text="4.5"
-            android:textColor="#ffca28"
-            android:textSize="15sp"
-            android:textStyle="bold">
+            android:layout_height="110dp"
+            android:layout_weight="1.5">
 
-        </TextView>
+            <TextView
+                android:id="@+id/txtRating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:drawableLeft="@drawable/ic_rating"
+                android:drawablePadding="4dp"
+                android:text="4.5"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:textColor="#ffca28"
+                android:textSize="15sp"
+                android:textStyle="bold"/>
 
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_favorite_border_black_24dp"
+                android:id="@+id/imgFav"
+                android:layout_below="@+id/txtRating"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"/>
+        </RelativeLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

@@ -1,5 +1,7 @@
 package com.example.foodrunner.Activity
 
+import android.content.Context
+import android.os.AsyncTask
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
@@ -9,11 +11,15 @@ import androidx.appcompat.widget.Toolbar
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.room.Room
+import androidx.room.RoomDatabase
 import com.example.foodrunner.Fragment.Dashboard
 import com.example.foodrunner.Fragment.Favourites
 import com.example.foodrunner.Fragment.About
 import com.example.foodrunner.Fragment.Profile
 import com.example.foodrunner.R
+import com.example.foodrunner.database.RestaurantDatabase
+import com.example.foodrunner.database.RestaurantEntity
 import com.google.android.material.navigation.NavigationView
 
 class HomeActivity : AppCompatActivity() {
@@ -26,6 +32,8 @@ class HomeActivity : AppCompatActivity() {
 
     var previousMenuItem: MenuItem? = null
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
@@ -35,6 +43,7 @@ class HomeActivity : AppCompatActivity() {
         frame = findViewById(R.id.frame)
 
         openDashBoard()
+
 
         navigation_view.setNavigationItemSelectedListener {
 
@@ -138,6 +147,33 @@ class HomeActivity : AppCompatActivity() {
             !is Dashboard -> openDashBoard()
 
             else-> finishAffinity()
+        }
+    }
+
+
+    class Dbasync(val context: Context, val restaurantEntity: RestaurantEntity, val mode: Int) : AsyncTask<Void, Void, Boolean>() {
+
+        val db = Room.databaseBuilder(context, RestaurantDatabase::class.java, "res-db").build()
+        override fun doInBackground(vararg params: Void?): Boolean {
+
+            when(mode){
+                1-> {
+                    val restaurant = db.restaurantDao().getRestaurantById(restaurantEntity.id)
+                    db.close()
+                    return restaurant != null
+                }
+                2-> {
+                    db.restaurantDao().insertRestaurant(restaurantEntity)
+                    db.close()
+                    return true
+                }
+                3-> {
+                    db.restaurantDao().deleteRestaurant(restaurantEntity)
+                    db.close()
+                    return true
+                }
+            }
+            return false
         }
     }
 }

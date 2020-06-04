@@ -7,6 +7,7 @@
 
 
     <TextView
+        android:id="@+id/txtLogo"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fontFamily="@font/bangers"

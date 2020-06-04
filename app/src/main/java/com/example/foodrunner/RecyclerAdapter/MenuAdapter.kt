@@ -31,6 +31,6 @@ class MenuAdapter(val context: Context, val itemList : ArrayList<MenuItem>):
     override fun onBindViewHolder(holder: MenuAdapter.ViewHolder, position: Int) {
         val item = itemList[position]
         holder.txtName.text = item.name
-        holder.txtCost.text = item.cost_for_one
+        holder.txtCost.text = "Rs.${item.cost_for_one}"
     }
 }

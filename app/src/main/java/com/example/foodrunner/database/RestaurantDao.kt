@@ -19,5 +19,5 @@ interface RestaurantDao {
     fun getAllRestaurant(): List<RestaurantEntity>
 
     @Query("SELECT * FROM restaurant WHERE id = :id")
-    fun getRestaurantById(id : String) : RestaurantEntity
+    fun getRestaurantById(id : Int) : RestaurantEntity
 }
