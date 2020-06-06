@@ -46,12 +46,12 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="30dp"
-            android:id="@+id/btnadd"
+            android:id="@+id/btnAdd"
             android:layout_marginHorizontal="10dp"
             android:text="Add"
             android:textSize="10sp"
-            android:background="#1a237e"
-            android:textColor="#ffffff"/>
+            android:background= "@color/addFav"
+            android:textColor="#ffffff" />
     </RelativeLayout>
 
 </LinearLayout>

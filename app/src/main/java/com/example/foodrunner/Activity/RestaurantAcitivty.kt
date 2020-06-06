@@ -1,5 +1,6 @@
 package com.example.foodrunner.Activity
 
+import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
@@ -22,6 +23,8 @@ import com.android.volley.toolbox.Volley
 import com.example.foodrunner.Dataclass.MenuItem
 import com.example.foodrunner.R
 import com.example.foodrunner.RecyclerAdapter.MenuAdapter
+import com.example.foodrunner.database.CartDatabase
+import com.example.foodrunner.database.CartEntity
 import com.example.foodrunner.database.RestaurantDatabase
 import com.example.foodrunner.database.RestaurantEntity
 import com.example.foodrunner.util.ConnectionManager
@@ -87,8 +90,51 @@ class RestaurantAcitivty : AppCompatActivity() {
                 }
             }
             queue.add(req)
-
         }
+    }
+
+    override fun onBackPressed() {
+
+        val cart = Cart(this, 1).execute().get()
+        println("CART $cart")
+        if(!cart){
+            val dialog = AlertDialog.Builder(this )
+            dialog.setTitle("Confirmation")
+            dialog.setMessage("This will clear cart")
+            dialog.setPositiveButton("Yes") { text, listener ->
+                val clearCart = Cart(this, 2).execute().get()
+                val intent = Intent(this, HomeActivity::class.java)
+                startActivity(intent)
+            }
+            dialog.setNegativeButton("NO") { text, listener ->
+            }
+            dialog.create()
+            dialog.show()
+        }else{
+            val clearCart = Cart(this, 2).execute().get()
+            val intent = Intent(this, HomeActivity::class.java)
+            startActivity(intent)
+        }
+    }
+
+
+    class Cart(val context: Context, val mode: Int): AsyncTask<Void,Void,Boolean>(){
+        override fun doInBackground(vararg params: Void?): Boolean{
+            val db = Room.databaseBuilder(context, CartDatabase::class.java, "cart-db").build()
+            when(mode){
+                1 -> {
+                    val cartItems = db.cartDao().getCart()
+                    println("CAART $cartItems")
+                    return cartItems.isEmpty()
+                }
+                2 -> {
+                    db.cartDao().clearCart()
+                    return true
+                }
+            }
+            return false
+        }
+
     }
 }
 
